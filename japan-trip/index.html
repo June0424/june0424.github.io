@@ -936,6 +936,28 @@ tfoot td { font-weight: 700; border-top: 2px solid var(--line); }
 
 /* Tips & footer */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.flights { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.flight { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+.flight .route { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
+.flight .when { color: var(--accent-ink); font-weight: 700; margin-top: 2px; }
+.flight dl { display: grid; grid-template-columns: 5.5em 1fr; gap: 6px 10px; margin: 12px 0 0; font-size: .95rem; }
+.flight dt { color: var(--muted); }
+.flight dd { margin: 0; color: var(--ink-2); min-width: 0; }
+.prep-progress { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; font-size: .95rem; color: var(--ink-2); }
+.prep-progress .track { flex: 1; height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; max-width: 320px; }
+.prep-progress .fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0; }
+.phase { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; margin-top: 12px; overflow: hidden; }
+.phase > header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 12px 18px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.phase > header h3 { font-family: var(--font-body); font-size: 1.05rem; }
+.phase > header .due { font-size: .9rem; color: var(--accent-ink); font-weight: 700; }
+.phase ul { list-style: none; margin: 0; padding: 4px 0; }
+.phase li { padding: 10px 18px; border-top: 1px dashed var(--line); }
+.phase li:first-child { border-top: 0; }
+.phase label { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; cursor: pointer; }
+.phase input[type=checkbox] { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--accent); }
+.phase .txt b { color: var(--ink); }
+.phase .txt small { display: block; color: var(--muted); font-size: .88rem; margin-top: 2px; }
+.phase li.done .txt b { text-decoration: line-through; color: var(--muted); }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
 .card h3 { font-family: var(--font-body); font-size: 1.05rem; margin-bottom: 8px; }
 .card ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: .97rem; }
@@ -984,6 +1006,7 @@ footer.site summary:hover { color: var(--ink-2); }
     <span>기간 <b>10일 9박</b></span>
     <span>항공 <b>인천 → 후쿠오카, 간사이 → 인천</b></span>
     <span>이동 <b>JR·버스 개별 승차권</b></span>
+    <span><a href="#prep">여행 준비 순서 보기 ↓</a></span>
   </div>
   <div class="warn" id="dateWarn" role="status" aria-live="polite" hidden></div>
   <div class="tiles" id="tiles"></div>
@@ -1043,6 +1066,17 @@ footer.site summary:hover { color: var(--ink-2); }
       </table>
     </div>
   </div>
+</section>
+
+<section class="section wrap" id="prep">
+  <div class="head"><div>
+    <h2>여행 준비 순서</h2>
+    <p class="sub">위에서부터 차례대로 하면 됩니다. 체크한 내용은 이 기기 브라우저에만 저장됩니다.</p>
+  </div></div>
+  <h3 style="font-family:var(--font-body);font-size:1.1rem;margin:4px 0 10px">먼저 항공권 두 장</h3>
+  <div class="flights" id="flightCards"></div>
+  <div class="prep-progress"><span id="prepCount" class="num"></span><div class="track"><div class="fill" id="prepFill"></div></div></div>
+  <div id="prepPhases"></div>
 </section>
 
 <section class="section wrap" id="tips">
@@ -1271,6 +1305,54 @@ const TRIP = {
     { title: '돈과 연락', items: ['이번 10일 일정은 JR 패스를 사지 않습니다. 7일 패스(23,000엔)보다 그때그때 표를 사는 쪽이 2,600엔쯤 쌉니다. 신칸센은 역 자판기에서 「자유석(自由席)」 표를 삽니다.', '트래블 체크카드(트래블로그·트래블월렛)로 결제하고 ATM은 세븐일레븐·우체국을 씁니다.', 'eSIM은 출발 전에 설치하고, 구글 지도 오프라인 지도를 야마구치 지역까지 받아 둡니다. 데이터 전용이라 통화는 카카오톡으로 합니다.', '긴급 전화: 경찰 110, 구급·화재 119. 외교부 영사콜센터(24시간, +82-2-3210-0404)를 가장 먼저 저장합니다. 1일차 후쿠오카는 주후쿠오카 총영사관(092-771-0461), 2~7일차 야마구치·히로시마는 주히로시마 총영사관(082-505-2100), 8~10일차 히메지·오사카·나라는 주오사카 총영사관(06-4256-2345) 담당입니다.'] },
     { title: '날짜 맞추기', items: ['2일차가 금·토·일이어야 가라토시장 초밥거리가 열립니다. 위의 출발일을 바꾸면 자동으로 확인해 줍니다.', '2026년 11월 23일(월)은 근로감사의 날 공휴일이라 버스가 휴일 시간표로 줄고, 그다음 날 24일(화)에 대신 쉬는 시설이 있습니다.', '9일차 나라는 토요일이라 붐빕니다. 아침 일찍 출발합니다.', '미야지마 단풍은 11월 중하순이 절정이라 이 시기 숙소는 빨리 찹니다. 숙소부터 예약합니다.'] },
   ],
+  flights: [
+    { route: '인천 → 후쿠오카', when: '가는 편 · {d1}', rows: [
+      ['시간', '인천 08:00~10:30 출발, 후쿠오카 12시 전 도착편. 오후 2시 넘어 도착하면 모지코를 빼고 바로 시모노세키로 갑니다.'],
+      ['항공사', '대한항공·아시아나·제주항공·진에어·티웨이 등 매일 여러 편'],
+      ['목표 금액', '항공권 12만원 + 수하물 4만원, 합쳐서 16만원 이하'],
+      ['수하물', '기내 7~10kg 배낭 하나로 가면 수하물 요금 4만원이 빠집니다'],
+    ] },
+    { route: '간사이 → 인천', when: '오는 편 · {d10}', rows: [
+      ['시간', '간사이 12:00~15:00 출발편. 오전 10시 전 출발편은 새벽에 숙소를 나서야 해서 피합니다.'],
+      ['터미널', '피치항공은 제2터미널, 나머지 한국행은 대부분 제1터미널'],
+      ['목표 금액', '항공권 14만원 + 수하물 4만원, 합쳐서 18만원 이하'],
+      ['검색 방법', '스카이스캐너 「다구간」으로 두 편을 한 번에 검색하고, 세금·수하물 포함 총액을 비교한 뒤 항공사 공식 사이트에서 결제합니다. 여권 영문 이름 철자를 꼭 확인합니다.'],
+    ] },
+  ],
+  prep: [
+    { title: '이번 주: 항공권과 숙소', due: '출발 4주 전, 10월 마지막 주', items: [
+      { id: 'flight-out', t: '가는 항공권 예약 (인천 → 후쿠오카, {d1})', d: '위 기준대로 오전 출발편, 수하물 포함 16만원 이하' },
+      { id: 'flight-back', t: '오는 항공권 예약 (간사이 → 인천, {d10})', d: '낮 12~15시 출발편, 수하물 포함 18만원 이하' },
+      { id: 'passport', t: '여권 만료일 확인', d: '귀국일까지 유효하면 됩니다. 일본은 90일 무비자입니다.' },
+      { id: 'hotels', t: '숙소 6곳 9박 예약', d: '아고다·부킹닷컴 같은 앱 하나에서 「무료 취소」 요금으로. 이름과 날짜는 페이지 위 숙소 표 그대로 넣습니다.' },
+      { id: 'share', t: '가족에게 이 페이지 공유', d: '페이지 오른쪽 위 공유 메뉴에서 가족을 추가합니다.' },
+    ] },
+    { title: '돈과 통신, 보험', due: '출발 3주 전, 11월 첫째 주', items: [
+      { id: 'card', t: '트래블 체크카드 발급하고 엔화 충전', d: '트래블로그·트래블월렛. 현금 3만엔은 카드로 현지 세븐일레븐 ATM에서 뽑거나 미리 환전합니다.' },
+      { id: 'sauna', t: '오사카 개인 사우나 예약 ({d8} 19:30, 100분)', d: 'SAUNA OOO OSAKA 공식 사이트. 1인실 5,500엔 안팎.' },
+      { id: 'insurance', t: '여행자보험 가입 (10일)', d: '해외 의료비 3천만원 이상, 휴대품 포함.' },
+      { id: 'esim', t: 'eSIM 구매 (10일, 매일 2GB)', d: '설치는 출발 전날, 켜는 건 일본 도착 후.' },
+    ] },
+    { title: '입국 서류와 사전 예약', due: '출발 1~2주 전', items: [
+      { id: 'vjw', t: 'Visit Japan Web 등록', d: '입국심사·세관 정보를 미리 넣고 QR 코드를 받아 둡니다. 공항에서 종이 서류를 쓰지 않아도 됩니다.' },
+      { id: 'museum', t: '평화기념자료관 아침 입장 온라인 예약 ({d6} 08:00, 무료)', d: '08:30 전 입장은 예약이 필요합니다.' },
+      { id: 'himeji', t: '히메지성 디지털 티켓 구매 (선택, {d8})', d: '현장 줄을 줄입니다. 18세 이상 2,500엔.' },
+      { id: 'maps', t: '구글 지도 오프라인 지도 받기', d: '야마구치현, 히로시마, 오사카 세 구역.' },
+      { id: 'sos', t: '긴급 연락처 휴대폰에 저장', d: '영사콜센터 +82-2-3210-0404, 주후쿠오카·주히로시마·주오사카 총영사관 (번호는 아래 「돈과 연락」 카드).' },
+    ] },
+    { title: '짐 싸기와 마지막 확인', due: '출발 2~3일 전', items: [
+      { id: 'timetable', t: '시골 구간 시간표 캡처', d: '{d3} 시모노세키 → 나가토시 9시대 열차, {d4} 나가토시 → 히가시하기 15:05, {d5} 슈퍼하기호 14:35.' },
+      { id: 'weather', t: '날씨 확인', d: '11월 말 서일본은 아침 7~10도, 낮 14~17도 안팎. 얇은 패딩이나 겉옷 하나.' },
+      { id: 'pack', t: '짐 싸기', d: '여권, 카드 2장, 엔화 현금, 작은 수건과 비누(온천용), 일본 11자 콘센트용 「돼지코」 어댑터, 보조배터리, 동전지갑, 편한 운동화(자전거·계단), 접는 우산.' },
+      { id: 'checkin', t: '항공사 온라인 체크인', d: '보통 출발 24~48시간 전부터 열립니다.' },
+    ] },
+    { title: '여행 중에 현지에서 부탁할 것', due: '한국에서는 할 필요 없음', items: [
+      { id: 'ic', t: '{d1} 하카타: 교통카드 ICOCA 사기', d: '지하철역 기계, 보증금 500엔 + 충전 2,000엔.' },
+      { id: 'taxi', t: '{d2} 그린호텔 프런트: 다음 날 나가토 합승 관광택시 예약', d: '전날 17시 마감, 나가토시 관광협회 0837-27-0074.' },
+      { id: 'onsen', t: '{d3} 사이쿄 프런트: 다음 날 11시 산무라벳칸 가족탕 예약', d: '외부 손님을 안 받으면 그날 사이쿄 대신 산무라벳칸 숙박을 검토.' },
+      { id: 'refund', t: '{d10} 간사이공항: 교통카드 잔액 돌려받기', d: '공항역 창구, 수수료 220엔.' },
+    ] },
+  ],
 };
 </script>
 <script>
@@ -1312,7 +1394,7 @@ const TRIP = {
   const fDate = d => `${d.getMonth() + 1}월 ${d.getDate()}일 (${WD[d.getDay()]})`;
   const fDateShort = d => `${d.getMonth() + 1}/${d.getDate()} ${WD[d.getDay()]}`;
   // {d1}..{d8} in data strings become the real date of that day, so the text follows the start-date picker
-  const tok = s => s ? String(s).replace(/\{d(\d)\}/g, (_, n) => fDateShort(dayDate(+n - 1))) : '';
+  const tok = s => s ? String(s).replace(/\{d(\d+)\}/g, (_, n) => fDateShort(dayDate(+n - 1))) : '';
   const validRate = v => Number.isFinite(v) && v > 300 && v < 3000;
 
   // ---------- flatten ----------
@@ -1465,6 +1547,21 @@ const TRIP = {
   }
 
   // ---------- render: tips & sources ----------
+  function renderPrep() {
+    $('#flightCards').innerHTML = (TRIP.flights || []).map(f => `<div class="flight">
+      <div class="route">${f.route}</div><div class="when num">${tok(f.when)}</div>
+      <dl>${f.rows.map(([k, v]) => `<dt>${k}</dt><dd>${tok(v)}</dd>`).join('')}</dl></div>`).join('');
+    let st = {}; try { st = JSON.parse(localStorage.getItem('prep-done') || '{}') || {}; } catch (e) {}
+    const all = (TRIP.prep || []).flatMap(ph => ph.items);
+    $('#prepPhases').innerHTML = (TRIP.prep || []).map((ph, pi) => `<div class="phase"><header><h3>${ph.title}</h3><span class="due">${tok(ph.due)}</span></header><ul>${ph.items.map(it => `<li class="${st[it.id] ? 'done' : ''}"><label><input type="checkbox" id="prep-${it.id}" data-id="${it.id}" ${st[it.id] ? 'checked' : ''}><span class="txt"><b>${tok(it.t)}</b>${it.d ? `<small>${tok(it.d)}</small>` : ''}</span></label></li>`).join('')}</ul></div>`).join('');
+    const upd = () => { const n = all.filter(it => st[it.id]).length; $('#prepCount').textContent = `${n} / ${all.length} 완료`; $('#prepFill').style.width = (all.length ? n / all.length * 100 : 0) + '%'; };
+    $('#prepPhases').querySelectorAll('input[type=checkbox]').forEach(cb => cb.addEventListener('change', () => {
+      st[cb.dataset.id] = cb.checked; cb.closest('li').classList.toggle('done', cb.checked);
+      try { localStorage.setItem('prep-done', JSON.stringify(st)); } catch (e) {}
+      upd();
+    }));
+    upd();
+  }
   function renderTips() {
     $('#tipCards').innerHTML = TRIP.tips.map(t => `<div class="card"><h3>${t.title}</h3><ul>${t.items.map(i => `<li>${tok(i)}</li>`).join('')}</ul></div>`).join('');
     const srcs = [...new Set(stops.map(s => s.src).filter(Boolean))];
@@ -1611,12 +1708,12 @@ const TRIP = {
     $('#fxInput').addEventListener('keydown', e => { if (e.key === 'Enter') manual(); });
     $('#fxLive').addEventListener('click', () => fetchLive(false));
     $('#fxReset').addEventListener('click', () => { try { localStorage.removeItem('fx-manual'); } catch (e) {} applyRate(TRIP.fx.per100, TRIP.fx.label, false); });
-    $('#startDate').addEventListener('change', e => { if (!e.target.value) return; TRIP.startDate = e.target.value; start = new Date(e.target.value + 'T00:00:00'); renderDates(); renderChips(); renderLodging(); renderDays(); renderBudget(); renderTips(); });
+    $('#startDate').addEventListener('change', e => { if (!e.target.value) return; TRIP.startDate = e.target.value; start = new Date(e.target.value + 'T00:00:00'); renderDates(); renderChips(); renderLodging(); renderDays(); renderBudget(); renderTips(); renderPrep(); });
   }
 
   // prices only: never touches the map viewport or the date picker
   function renderPrices() { renderFx(); renderTiles(); renderLodging(); renderDays(); renderBudget(); }
-  function renderAll() { renderFx(); renderDates(); renderTiles(); renderChips(); renderLodging(); renderDays(); renderBudget(); renderTips(); }
+  function renderAll() { renderFx(); renderDates(); renderTiles(); renderChips(); renderLodging(); renderDays(); renderBudget(); renderTips(); renderPrep(); }
 
   // ---------- boot ----------
   renderAll(); wireFx();
