@@ -1102,7 +1102,7 @@ window.COAST = [{"c":"KOR","r":[[37.781,126.633],[37.8,126.665],[37.917,126.665]
 // {d1}..{d13} in strings become the real date of that day.
 const TRIP = {
  "startDate": "2026-11-10",
- "budgetKRW": 2750000,
+ "budgetKRW": 3000000,
  "fx": {
   "per100": 844,
   "label": "2026-10-23 서울외환시장 매매기준율 (100엔 = 844원)"
@@ -3086,7 +3086,8 @@ const TRIP = {
     }
    ]
   }
- ]
+ ],
+ "reserveKRW": 300000
 };
 </script>
 <script>
@@ -3188,9 +3189,9 @@ const TRIP = {
     const T = allTotals();
     const left = TRIP.budgetKRW - T.krw;
     $('#tiles').innerHTML = `
-      <div class="tile"><div class="lbl">총 예산</div><div class="val num">${fWman(TRIP.budgetKRW)}</div><div class="sub">1인 기준</div></div>
+      <div class="tile"><div class="lbl">총 예산</div><div class="val num">${fWman(TRIP.budgetKRW)}</div><div class="sub">${TRIP.reserveKRW ? '1인 기준, 예비비 ' + fWman(TRIP.reserveKRW) + ' 별도' : '1인 기준'}</div></div>
       <div class="tile"><div class="lbl">예상 지출</div><div class="val num">${fWman(T.krw)}</div><div class="sub num">약 ${fY(T.yen)} 상당</div></div>
-      <div class="tile"><div class="lbl">${left >= 0 ? '남는 여유' : '초과'}</div><div class="val num">${fWman(Math.abs(left))}</div><div class="sub">${left >= 0 ? '쇼핑과 돌발 지출용' : '예산을 넘었습니다. 쇼핑을 줄이거나 예산을 올립니다'}</div></div>
+      <div class="tile"><div class="lbl">${left >= 0 ? '남는 여유' : '초과'}</div><div class="val num">${fWman(Math.abs(left))}</div><div class="sub">${left >= 0 ? '쇼핑과 돌발 지출용' : (TRIP.reserveKRW && left + TRIP.reserveKRW >= 0 ? '예비비 ' + fWman(TRIP.reserveKRW) + '에서 쓰고 ' + fWman(left + TRIP.reserveKRW) + ' 남음' : '예산을 넘었습니다. 쇼핑을 줄이거나 예산을 올립니다')}</div></div>
       <div class="tile"><div class="lbl">하루 평균 (항공 제외)</div><div class="val num">${fWman((T.krw - T.cats.flight.krw) / TRIP.days.length)}</div><div class="sub num">${fY((T.yen - T.cats.flight.yen) / TRIP.days.length)} 정도</div></div>`;
   }
 
