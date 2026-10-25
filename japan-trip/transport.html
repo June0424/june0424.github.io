@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>일본 이동 가이드</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: phone-first field guide. One card per travel day, steps as a vertical route with time / place / vehicle / fare, a status chip on every fact so verified and estimated items never look alike. */
+:root {
+  --bg: #f3f5f4;
+  --surface: #ffffff;
+  --ink: #17262a;
+  --ink-2: #4a5b60;
+  --line: #d9e0de;
+  --accent: #0f5c73;
+  --accent-soft: #dcebf0;
+  --ok: #1b6b43;
+  --ok-soft: #dcf0e4;
+  --est: #8a5a00;
+  --est-soft: #f8ebcc;
+  --check: #a1331f;
+  --check-soft: #f8dfd9;
+  --font-display: "Gowun Batang", "Noto Serif KR", serif;
+  --font-body: "Noto Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1a1d; --surface: #172629; --ink: #e8f0ef; --ink-2: #a7bbbe; --line: #2a3d41;
+    --accent: #6fc3dc; --accent-soft: #1c3a44;
+    --ok: #7fd4a1; --ok-soft: #1b3a29; --est: #e8bd62; --est-soft: #3b2f12; --check: #f0907d; --check-soft: #3d1f19;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1a1d; --surface: #172629; --ink: #e8f0ef; --ink-2: #a7bbbe; --line: #2a3d41;
+  --accent: #6fc3dc; --accent-soft: #1c3a44;
+  --ok: #7fd4a1; --ok-soft: #1b3a29; --est: #e8bd62; --est-soft: #3b2f12; --check: #f0907d; --check-soft: #3d1f19;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 28px; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; line-height: 1.3; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.lede { color: var(--ink-2); max-width: 60ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: .9rem; color: var(--ink-2); }
+.chip { display: inline-block; font-size: .72rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; white-space: nowrap; vertical-align: 1px; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.est { background: var(--est-soft); color: var(--est); }
+.chip.chk { background: var(--check-soft); color: var(--check); }
+nav.jump { display: flex; flex-wrap: wrap; gap: 8px; }
+nav.jump a { font-size: .9rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; background: var(--surface); }
+nav.jump a:focus-visible, .copy:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.rescue { border-color: var(--check); }
+.rescue h2 { color: var(--check); }
+ul.tight { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.phrase { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); }
+.phrase:first-of-type { border-top: 0; }
+.jp { font-size: 1.05rem; font-weight: 700; }
+.ko { color: var(--ink-2); font-size: .9rem; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .92rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .78rem; letter-spacing: .05em; color: var(--ink-2); text-transform: uppercase; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.total td { font-weight: 700; border-bottom: 0; }
+.day { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.day > header { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
+.day .date { font-variant-numeric: tabular-nums; font-size: .85rem; color: var(--accent); font-weight: 700; }
+.steps { list-style: none; margin: 0; padding: 6px 16px 14px; display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: 4.2em 1fr; gap: 6px 10px; padding: 10px 0; border-top: 1px dashed var(--line); }
+.step:first-child { border-top: 0; }
+.t { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--accent); font-size: .95rem; }
+.what { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.what b { font-weight: 700; }
+.meta { font-size: .88rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.meta span { font-variant-numeric: tabular-nums; }
+.if { font-size: .88rem; background: var(--est-soft); color: var(--ink); padding: 6px 10px; border-radius: 8px; }
+.if strong { color: var(--est); }
+.say { font-size: .9rem; }
+.say .jp { font-size: .95rem; }
+.copy { font: inherit; font-size: .8rem; margin-left: 6px; padding: 1px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); cursor: pointer; }
+details.day > summary { list-style: none; cursor: pointer; }
+details.day > summary::-webkit-details-marker { display: none; }
+details.day > summary header { border-bottom: 0; }
+details.day[open] > summary header { border-bottom: 1px solid var(--line); }
+details.day > summary header::after { content: "탭해서 펼치기"; font-size: .78rem; color: var(--ink-2); }
+details.day[open] > summary header::after { content: "탭해서 접기"; }
+.src { font-size: .85rem; color: var(--ink-2); }
+.src li { overflow-wrap: anywhere; }
+@media (max-width: 420px) { .step { grid-template-columns: 3.6em 1fr; } h1 { font-size: 1.6rem; } }
+@media (prefers-reduced-motion: no-preference) { nav.jump a { transition: background .15s; } nav.jump a:hover { background: var(--accent-soft); } }
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <div class="eyebrow">2026.11.10 ~ 11.26 · 혼자 가는 길</div>
+    <h1>어디서 무엇을 몇 시에 타나</h1>
+    <p class="lede">이동하는 날마다 타는 곳, 탈 것, 시각, 요금을 순서대로 적었습니다. 확인하지 못한 시각은 숨기지 않고 표시했으니, 출발 전에 「확인 필요」 항목부터 정리하세요.</p>
+    <div class="legend">
+      <span><span class="chip ok">확인됨</span> 검색으로 찾은 시각·요금</span>
+      <span><span class="chip est">추정</span> 기억이나 예전 자료 기준</span>
+      <span><span class="chip chk">확인 필요</span> 출발 전에 직접 확인</span>
+    </div>
+    <nav class="jump" aria-label="바로가기">
+      <a href="#rescue">길을 잃었을 때</a>
+      <a href="#lodging">숙소 비용</a>
+      <a href="#days">이동일별 안내</a>
+      <a href="#sources">출처</a>
+    </nav>
+  </header>
+
+  <section id="rescue">
+    <div class="panel rescue">
+      <h2>막혔을 때 먼저 할 일</h2>
+      <ul class="tight">
+        <li>구글 지도의 「대중교통」 길찾기에 목적지를 넣고, 나오는 승강장 번호와 열차 이름을 그대로 따라갑니다. 앱은 구글 지도 하나면 충분합니다.</li>
+        <li>역이나 버스터미널에서는 직원에게 아래 일본어 문장을 화면으로 보여 줍니다. 말이 안 통하면 문장 그대로 보여 주기만 해도 됩니다.</li>
+        <li>버스·열차를 놓치면 다음 편을 확인하고, 그날 숙소 체크인 시간만 지키면 됩니다. 시모노세키와 오사카 구간은 대체 편이 많습니다. 유후인 버스는 편수가 적어 놓치면 몇 시간이 걸립니다.</li>
+        <li>택시는 역 앞에서 잡습니다. 목적지 이름을 일본어로 보여 주면 됩니다. 시골에서는 앱 호출이 안 될 수 있으니 숙소에 부탁하는 편이 쉽습니다.</li>
+        <li>휴대폰 배터리를 가장 먼저 챙깁니다. 보조배터리와 케이블은 가방 맨 위에.</li>
+      </ul>
+      <div>
+        <div class="phrase"><span class="jp" id="p1">この バスは ゆふいんに いきますか。</span><span class="ko">이 버스 유후인에 가나요? (고노 바스와 유후인니 이키마스카)</span></div>
+        <div class="phrase"><span class="jp" id="p2">ホームは どこですか。</span><span class="ko">승강장이 어디예요? (호무와 도코데스카)</span></div>
+        <div class="phrase"><span class="jp" id="p3">この でんしゃは おおさかに とまりますか。</span><span class="ko">이 전철이 오사카에 서나요? (고노 덴샤와 오사카니 토마리마스카)</span></div>
+        <div class="phrase"><span class="jp" id="p4">いちばん あとの バスは なんじですか。</span><span class="ko">마지막 버스는 몇 시예요? (이치방 아토노 바스와 난지데스카)</span></div>
+        <div class="phrase"><span class="jp" id="p5">タクシーを よんで ください。</span><span class="ko">택시를 불러 주세요. (타쿠시오 욘데 쿠다사이)</span></div>
+        <div class="phrase"><span class="jp" id="p6">みちに まよいました。たすけて ください。</span><span class="ko">길을 잃었어요. 도와주세요. (미치니 마요이마시타. 타스케테 쿠다사이)</span></div>
+      </div>
+      <p><b>긴급 연락처</b>: 경찰 110, 구급·화재 119, 영사콜센터(24시간) <span class="chip ok">확인됨</span> +82-2-3210-0404. 총영사관은 후쿠오카 092-771-0461, 히로시마 082-505-2100, 오사카 06-4256-2345 (번호는 출발 전에 한 번 더 확인).</p>
+    </div>
+  </section>
+
+  <section id="lodging">
+    <h2>숙소에 얼마 쓰면 되나</h2>
+    <div class="panel">
+      <div class="tbl">
+        <table>
+          <thead><tr><th>구간</th><th class="n">박</th><th class="n">1박 계획</th><th class="n">예약 상한</th><th class="n">합계</th></tr></thead>
+          <tbody>
+            <tr><td>하카타 (11/10)</td><td class="n">1</td><td class="n">¥7,000<br>5.9만원</td><td class="n">¥10,000</td><td class="n">¥7,000<br>5.9만원</td></tr>
+            <tr><td>유후인 일반 싱글 (11/11~12)</td><td class="n">2</td><td class="n">¥10,000<br>8.4만원</td><td class="n">¥14,000</td><td class="n">¥20,000<br>16.9만원</td></tr>
+            <tr><td>유후인 방 안 노천탕 (11/13)</td><td class="n">1</td><td class="n">¥30,000<br>25.3만원</td><td class="n">¥40,000</td><td class="n">¥30,000<br>25.3만원</td></tr>
+            <tr><td>시모노세키 그린호텔 (11/14~17)</td><td class="n">4</td><td class="n">¥6,500<br>5.5만원</td><td class="n">¥9,000</td><td class="n">¥26,000<br>21.9만원</td></tr>
+            <tr><td>오사카 호텔 그란비아 (11/18~25)</td><td class="n">8</td><td class="n">¥9,500<br>8.0만원</td><td class="n">¥14,000</td><td class="n">¥76,000<br>64.1만원</td></tr>
+            <tr class="total"><td>합계</td><td class="n">16</td><td class="n"></td><td class="n"></td><td class="n">¥159,000<br>134.2만원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ko">원화는 100엔 = 844원 기준입니다. 「예약 상한」은 이 값을 넘으면 같은 지역에서 다른 숙소를 찾아보라는 기준이고, 방 안 노천탕 숙소는 식사 포함 여부로 값이 크게 달라집니다.</p>
+      <p><span class="chip chk">확인 필요</span> 호텔 그란비아 오사카는 JR 오사카역에 붙은 큰 호텔이라, 제가 아는 보통 요금은 1박 1만 5천 엔 이상인 날이 많습니다. 조식 포함 8만 원(약 ¥9,500)은 특가나 평일 요금일 수 있어요. 연휴 주말(11/21~23)은 더 오를 수 있습니다. 8박 합계는 ¥76,000(64만 원)이 아니라 ¥120,000(101만 원)까지 갈 수 있습니다. 그 경우 계획보다 약 37만 원이 늘어 예비비로 감당할 수 있는 범위입니다. 예약 사이트에서 날짜별 요금을 확인한 뒤 무료 취소 요금으로 잡으세요.</p>
+    </div>
+  </section>
+
+  <section id="days">
+    <h2>이동일별 안내</h2>
+    <p class="lede">이동 거리가 있는 날만 적었습니다. 카드를 눌러 펼치세요. 첫 카드는 열려 있습니다.</p>
+
+    <details class="day" open>
+      <summary><header><span class="date">11/10 화 · 1일차</span><h3>후쿠오카공항 → 하카타 숙소</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">~19:20</span><div class="what"><b>후쿠오카공항 국제선 도착</b><span class="meta"><span>입국 수속 후 20시 전후</span></span><span class="chip est">추정</span></div></li>
+        <li class="step"><span class="t">20:30</span><div class="what"><b>공항 무료 셔틀(국제선 → 국내선 터미널)</b><span class="meta"><span>약 10분</span><span>무료</span></span><span class="if"><strong>안내판이 안 보이면</strong> 도착 로비 안내 데스크에 「ちかてつの のりばは どこですか」라고 물어보세요.</span></div></li>
+        <li class="step"><span class="t">20:50</span><div class="what"><b>지하철 공항선 후쿠오카공항 → 하카타역</b><span class="meta"><span>약 5분</span><span>¥260</span></span><span class="chip est">추정</span><span class="if"><strong>막차</strong>는 자정 전후라 21시대에 타면 안전합니다.</span></div></li>
+        <li class="step"><span class="t">21:15</span><div class="what"><b>하카타 숙소 체크인</b><span class="meta"><span>하카타역 도보 5분 안</span></span><span class="if"><strong>늦게 도착한다고</strong> 숙소에 미리 알립니다. 체크인이 22시까지인 곳이 많습니다.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/11 수 · 2일차</span><h3>하카타 → 유후인 고속버스</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">08:30</span><div class="what"><b>하카타 버스터미널 도착</b><span class="meta"><span>JR 하카타역 바로 옆 건물</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>승차장 번호는 현장 전광판에서 「由布院(유후인)」 행을 찾으세요.</span></span></div></li>
+        <li class="step"><span class="t">09:18</span><div class="what"><b>유후인행 「ゆふいん号」 (추천)</b><span class="meta"><span>하카타 발 8:48 / 9:18 / 9:48 / 10:18 / 10:48</span><span>소요 약 2시간</span><span>¥3,250</span></span><span class="chip ok">확인됨</span><span class="meta"><span>위 시각은 2025년 4월 개정 시간표 기준. 지금도 같은지는 예약할 때 확인하세요. 모두 예약 필요.</span></span><span class="if"><strong>놓치면</strong> 다음 편이 30분 뒤에 있습니다. 예약한 편을 놓치면 터미널 창구에서 같은 날 다른 편으로 바꿔 줍니다.</span></div></li>
+        <li class="step"><span class="t">11:17</span><div class="what"><b>유후인 역앞 버스센터(由布院駅前バスセンター) 도착</b><span class="meta"><span>유후인역 바로 옆</span></span><span class="if"><strong>짐이 무거우면</strong> 센터에서 숙소까지 걸어서 10분 안입니다. 체크인 전이면 숙소에 짐만 맡기세요.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/12 목 · 3일차</span><h3>유후인 ↔ 벳푸 (평일 버스)</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">08:30</span><div class="what"><b>유후인 역앞 버스센터 → 벳푸역 서쪽 출구(別府駅西口)</b><span class="meta"><span>亀の井버스 36/37번 「別府湯布院線」</span><span>약 51분</span><span>편도 ¥1,100 (교통카드 가능)</span></span><span class="chip ok">확인됨</span><span class="meta"><span>하루 약 18편, 06:56~18:00 (한 자료 기준)</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>오늘 날짜의 정확한 출발 시각은 유후인 센터 시간표 게시판에서 사진을 찍어 두세요.</span></span></div></li>
+        <li class="step"><span class="t">11:00</span><div class="what"><b>지옥온천(칸나와 지역)으로 이동</b><span class="meta"><span>벳푸역 앞에서 「地獄めぐり / 鉄輪」 방면 버스나 택시</span><span>택시 약 ¥2,500~3,000</span></span><span class="chip est">추정</span><span class="if"><strong>버스 번호가 헷갈리면</strong> 택시를 타세요. 역 앞에 늘 서 있습니다.</span></div></li>
+        <li class="step"><span class="t">16:30</span><div class="what"><b>벳푸역 서쪽 출구 → 유후인 막차 확인</b><span class="meta"><span>마지막 편이 18시 전후라는 자료가 있어 16:30~17:00 편을 타세요</span></span><span class="chip chk">확인 필요</span><span class="if"><strong>막차를 놓치면</strong> 벳푸에서 숙박하거나 택시로 가야 합니다(약 ¥12,000~15,000 추정). 막차 시각을 아침에 확인하세요.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/13 금 · 4일차</span><h3>방 안 노천탕 숙소로 이동</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">체크아웃</span><div class="what"><b>유후인 일반 숙소 → 방 안 노천탕 숙소</b><span class="meta"><span>숙소 송영차 또는 택시 ¥1,000~2,000 추정</span></span><span class="chip est">추정</span><span class="if"><strong>예약할 때</strong> 「역에서 송영이 있나요」를 꼭 묻습니다. 역에서 먼 숙소가 많습니다.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/14 토 · 5일차</span><h3>유후인 → 하카타 → 시모노세키</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">13:00</span><div class="what"><b>유후인 역앞 버스센터 → 하카타 고속버스</b><span class="meta"><span>확인된 유후인 발 편: 13:00 / 16:00 / 16:30 / 17:00</span></span><span class="chip ok">확인됨</span><span class="meta"><span>이 편들은 후쿠오카공항 국제선까지 가는 노선으로 보입니다. 예약할 때 내리는 곳을 「博多バスターミナル(하카타 버스터미널)」로 고르세요. 소요 약 2시간.</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>오전 편이 있는지는 확인하지 못했습니다. 있으면 더 일찍 출발해 시모노세키에 일찍 도착하세요.</span></span><span class="if"><strong>예약 전화</strong> 亀の井버스 유후인 센터 0977-84-3145 (일본어). 숙소 프런트에 부탁해도 됩니다.</span></div></li>
+        <li class="step"><span class="t">15:15</span><div class="what"><b>하카타역 → 고쿠라역 신칸센</b><span class="meta"><span>약 16분</span><span>자유석 ¥2,160</span></span><span class="chip est">추정</span><span class="meta"><span>역 자판기에서 「小倉(고쿠라)」 표를 사세요. 10~15분 간격으로 다닙니다.</span></span></div></li>
+        <li class="step"><span class="t">15:50</span><div class="what"><b>고쿠라역 → 시모노세키역 JR</b><span class="meta"><span>약 15분</span><span>¥340</span></span><span class="chip est">추정</span><span class="if"><strong>승강장이 헷갈리면</strong> 「下関(시모노세키) 행」 전광판을 보세요. 종점이라 지나칠 수 없습니다.</span></div></li>
+        <li class="step"><span class="t">16:30</span><div class="what"><b>그린호텔 시모노세키 체크인</b><span class="meta"><span>시모노세키역 동쪽 출구 도보 3~5분</span></span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/15 일 · 6일차</span><h3>가라토시장 · 아카마신궁 · 가와타나 온천</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:30</span><div class="what"><b>시모노세키역 앞 버스 → 가라토(唐戸) 정류장</b><span class="meta"><span>サンデン交通 버스, 약 10분</span><span>¥260</span></span><span class="chip est">추정</span><span class="if"><strong>버스가 어려우면</strong> 택시 약 ¥1,500, 걸어서는 약 40분입니다.</span></div></li>
+        <li class="step"><span class="t">09:45</span><div class="what"><b>가라토시장 초밥거리 → 아카마신궁</b><span class="meta"><span>도보 5분</span></span><span class="meta"><span>일요일은 08시부터 열리고 현금만 받는 가게가 많습니다.</span></span></div></li>
+        <li class="step"><span class="t">13:30</span><div class="what"><b>JR 산인선 시모노세키 → 가와타나온천역</b><span class="meta"><span>약 35분</span><span>¥420</span></span><span class="chip est">추정</span><span class="chip chk">확인 필요</span><span class="meta"><span>산인선은 한 시간에 한 대꼴입니다. 내리자마자 역 시간표에서 돌아오는 열차와 막차를 사진으로 찍어 두세요.</span></span><span class="if"><strong>막차를 놓치면</strong> 가와타나에서 택시(시모노세키까지 약 ¥10,000 이상)입니다. 마지막 열차 한 시간 전에 움직이세요.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/16 월 · 7일차</span><h3>해저 터널 걷기 · 모지코</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:30</span><div class="what"><b>시모노세키역 → 미모스소가와 공원 버스</b><span class="meta"><span>약 ¥300</span></span><span class="chip est">추정</span><span class="if"><strong>어려우면</strong> 가라토까지 걸어가 해저 터널 입구까지 걷습니다. 터널 입구는 간몬 해협 쪽 「関門トンネル人道」 표지판을 따라갑니다.</span></div></li>
+        <li class="step"><span class="t">10:15</span><div class="what"><b>간몬 해저 보행 터널 걷기 (혼슈 → 규슈)</b><span class="meta"><span>780m, 약 15분</span><span>도보 무료</span></span></div></li>
+        <li class="step"><span class="t">16:00</span><div class="what"><b>모지코역 → 고쿠라 → 시모노세키 JR</b><span class="meta"><span>합계 약 ¥680</span><span>환승 1번</span></span><span class="chip est">추정</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/17 화 · 8일차</span><h3>조후 무사마을</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:45</span><div class="what"><b>시모노세키역 앞 버스 → 조후(長府)</b><span class="meta"><span>약 25분</span><span>편도 ¥430</span></span><span class="chip est">추정</span><span class="if"><strong>돌아올 때</strong> 같은 번호 반대편 정류장에서 「下関駅」 행을 탑니다.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/18 수 · 9일차</span><h3>시모노세키 → 오사카 (호텔 그란비아)</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:30</span><div class="what"><b>시모노세키역 → 고쿠라역 JR</b><span class="meta"><span>약 15분</span><span>¥340</span></span><span class="chip est">추정</span></div></li>
+        <li class="step"><span class="t">10:15</span><div class="what"><b>고쿠라역 → 신오사카역 산요 신칸센</b><span class="meta"><span>약 2시간 15~30분</span><span>자유석 약 ¥13,500</span></span><span class="chip est">추정</span><span class="chip chk">확인 필요</span><span class="meta"><span>같은 구간에서 「のぞみ」는 자유석이 없어서 「ひかり/こだま」나 「さくら」로 고릅니다. 자판기에서 「新大阪」 선택 후 지정석을 사도 됩니다(+¥500 안팎).</span></span></div></li>
+        <li class="step"><span class="t">14:00</span><div class="what"><b>신오사카역 → 오사카역 JR 교토선</b><span class="meta"><span>1정거장, 약 4분</span><span>약 ¥180</span></span><span class="chip est">추정</span><span class="if"><strong>승강장이 헷갈리면</strong> 「大阪(오사카) 행」 표지만 따라가세요. 호텔 그란비아는 오사카역에 바로 붙어 있습니다.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/19 목 · 10일차</span><h3>나라 당일치기</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">08:00</span><div class="what"><b>JR 오사카역 → 나라역 「大和路快速(야마토지 쾌속)」</b><span class="meta"><span>환상선 승강장에서 「奈良」 행</span><span>약 50분</span><span>약 ¥570</span></span><span class="chip est">추정</span><span class="if"><strong>다른 열차를 탔다면</strong> 텐노지(天王寺)에서 내려 「奈良」 행으로 갈아타세요.</span></div></li>
+        <li class="step"><span class="t">14:00</span><div class="what"><b>JR 나라역 → 텐노지(신세카이 쪽)</b><span class="meta"><span>약 35분</span><span>약 ¥570</span></span><span class="chip est">추정</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/20 금 · 11일차</span><h3>히메지성 + 저녁 사우나</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">08:30</span><div class="what"><b>JR 오사카역 → 히메지역 「新快速(신쾌속)」</b><span class="meta"><span>약 1시간</span><span>약 ¥1,520</span></span><span class="chip est">추정</span><span class="meta"><span>「姫路」 행 신쾌속은 갈아타기가 없습니다. 히메지성은 역에서 도보 20분.</span></span></div></li>
+        <li class="step"><span class="t">19:30</span><div class="what"><b>사우나 SAUNA OOO OSAKA (신사이바시)</b><span class="meta"><span>우메다 → 신사이바시 지하철 미도스지선 약 ¥240</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>예약 필수. 한국에서 공식 사이트로 미리.</span></span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/21 토 · 12일차</span><h3>아리마 온천 + 요도바시</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:00</span><div class="what"><b>우메다 → 아리마 온천 고속버스</b><span class="meta"><span>약 1시간</span><span>편도 약 ¥1,400</span></span><span class="chip est">추정</span><span class="chip chk">확인 필요</span><span class="meta"><span>우메다 한큐 고속버스 터미널에서 「有馬温泉」 행. 연휴 주말이라 일찍 갑니다. 안 되면 JR로 산노미야까지 가서 전철로 갈아타는 길도 있습니다.</span></span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/23 월 · 14일차</span><h3>고베</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:30</span><div class="what"><b>JR 오사카역 → 산노미야역 「新快速」</b><span class="meta"><span>약 21분</span><span>약 ¥420</span></span><span class="chip est">추정</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/24 화 · 15일차</span><h3>고야산 당일치기</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">07:30</span><div class="what"><b>우메다 → 난바 지하철 미도스지선</b><span class="meta"><span>약 10분</span><span>약 ¥240</span></span></div></li>
+        <li class="step"><span class="t">08:20</span><div class="what"><b>난카이 난바역 → 고야산 (「高野山・世界遺産きっぷ」 구입)</b><span class="meta"><span>난바 → 고쿠라쿠바시역 약 1시간 반~2시간, 케이블카, 산 위 버스</span></span><span class="chip ok">확인됨</span><span class="meta"><span>세계유산 티켓: 특급 제외 ¥4,210 / 고야 특급 편도 포함 ¥5,200. 산 위 버스 2일권과 사찰 입장·식사 쿠폰이 붙습니다. 난바 난카이 창구에서 삽니다.</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>특급 「こうや」 출발 시각은 확인하지 못했습니다. 난바 창구 시간표를 보고 가장 이른 편으로.</span></span><span class="if"><strong>돌아오는 마지막 차</strong>는 고야산 정상에서 일찍(17시대) 끊기니 오후 4시에는 산을 내려가세요.</span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/25 수 · 16일차</span><h3>우지</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">09:30</span><div class="what"><b>JR 오사카역 → 교토역 → 우지역</b><span class="meta"><span>신쾌속 약 30분 + 나라선 약 20분</span><span>왕복 약 ¥1,640</span></span><span class="chip est">추정</span><span class="meta"><span>교토역에서 「奈良線(나라선)」 승강장으로 갈아탑니다. 시내 관광은 하지 않습니다.</span></span></div></li>
+      </ol>
+    </details>
+
+    <details class="day">
+      <summary><header><span class="date">11/26 목 · 17일차</span><h3>오사카 → 간사이공항 (11:50 이스타 T1)</h3></header></summary>
+      <ol class="steps">
+        <li class="step"><span class="t">07:20</span><div class="what"><b>호텔 조식 후 체크아웃</b><span class="meta"><span>08:00 전에 오사카역을 나섭니다</span></span></div></li>
+        <li class="step"><span class="t">07:45</span><div class="what"><b>JR 오사카역 → 간사이공항역 「関空快速(간쿠 쾌속)」</b><span class="meta"><span>환상선 승강장에서 「関西空港」 행, 약 65~70분</span><span>¥1,210 안팎</span></span><span class="chip ok">확인됨</span><span class="meta"><span>빠른 길: 특급 「はるか」 약 47분, ¥2,380부터(지정석)</span></span><span class="if"><strong>열차가 막히면</strong> 우메다에서 공항 리무진 버스(약 50분, ¥1,600 안팎 추정)도 있습니다.</span></div></li>
+        <li class="step"><span class="t">09:30</span><div class="what"><b>간사이공항 제1터미널(T1) 이스타 체크인</b><span class="meta"><span>출발 2시간 20분 전</span></span><span class="chip chk">확인 필요</span><span class="meta"><span>이스타 카운터 열림 시각과 수하물 마감은 항공사 안내를 확인하세요.</span></span></div></li>
+      </ol>
+    </details>
+  </section>
+
+  <section id="sources">
+    <h2>출처</h2>
+    <ul class="tight src">
+      <li><a href="https://www.bushikaku.net/search/fukuoka_oita/fukuoka_yufuin/platform-5236_3959/">하카타 → 유후인 버스 (바스 비교나비)</a></li>
+      <li><a href="https://kamenoibus.com/highway/pdf/tt_yuf_fuk_20250401_new.pdf">유후인 → 후쿠오카 시간표 2025.4 (亀の井バス)</a></li>
+      <li><a href="https://hitabus.com/highways/2468">후쿠오카·후쿠오카공항 ↔ 유후인선 2025.4 개정</a></li>
+      <li><a href="https://www.navitime.co.jp/bus/diagram/timelist?departure=00507238&arrival=00087605&line=00079439">벳푸 ↔ 유후인 36/37번 (NAVITIME)</a></li>
+      <li><a href="https://monomoney-living.com/koyasan-sekaiisan-kippu-2026/">고야산 세계유산 티켓 2026</a></li>
+      <li><a href="https://www.fun-japan.jp/jp/articles/13484">오사카역 → 간사이공항 비교</a></li>
+    </ul>
+    <p class="src">시각과 요금은 검색 결과를 요약한 것으로 지금 시간표와 다를 수 있습니다. 출발 전날 구글 지도와 각 운행사 사이트에서 다시 확인하세요.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.phrase .jp').forEach(function (el) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'copy'; b.textContent = '복사';
+    b.addEventListener('click', function () {
+      var text = el.textContent;
+      var done = function () { b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1200); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { selectText(el); });
+      } else { selectText(el); }
+    });
+    el.insertAdjacentElement('afterend', b);
+  });
+  function selectText(el) {
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+})();
+</script>
+
+</body></html>
